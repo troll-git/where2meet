@@ -3,12 +3,27 @@ import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { getPlaceCoords } from "./API";
 
-const AddressSearch = () => {
+const AddressSearch = (props) => {
+  //let timer = null;
   const [placesList, setPlacesList] = useState([]);
-  useEffect(() => {
-    //getPlaceCoords("stary sacz staszica 17", logRes);
-  }, []);
+  const [searchValue, setSearchValue] = useState(null);
+  const [value, setValue] = useState("");
 
+  useEffect(() => {
+    const delayDebounceFn = setTimeout(() => {
+      if (!searchValue) console.log("no text");
+      else {
+        console.log(searchValue);
+        console.log("fetching data");
+        //setPlacesList(["mare", "mareko"]);
+        getPlaceCoords(searchValue, logRes);
+      }
+
+      // Send Axios request here
+    }, 1500);
+
+    return () => clearTimeout(delayDebounceFn);
+  }, [searchValue]);
   const logRes = (data) => {
     let places = [];
     for (const obj of data.features) {
@@ -28,7 +43,8 @@ const AddressSearch = () => {
           {...params}
           label="Combo box"
           variant="outlined"
-          onChange={(t) => getPlaceCoords(t.target.value, logRes)}
+          onChange={(e) => setSearchValue(e.target.value)}
+          //onChange={(t) => getPlaceCoords(t.target.value, logRes)}
         />
       )}
     />
