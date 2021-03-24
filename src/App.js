@@ -1,11 +1,11 @@
 import logo from "./logo.svg";
 import "./App.css";
-import AddressSearch from "./components/AddressSearch";
+import Layout from "./components/Layout";
 
 function App() {
   return (
     <div className="App">
-      <AddressSearch />
+      <Layout />
     </div>
   );
 }
