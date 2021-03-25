@@ -6,6 +6,7 @@ import {
   LayerGroup,
   LayersControl,
   ZoomControl,
+  useMap
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import CircularProgress from "@material-ui/core/CircularProgress";
@@ -15,6 +16,13 @@ const DEFAULT_VIEWPORT = {
   zoom: 13,
 };
 
+function SetViewOnClick({ coords }) {
+  const map = useMap();
+  map.setView(coords, map.getZoom());
+
+  return null;
+}
+
 class MapCanvas extends React.Component {
   constructor(props) {
     super(props);
@@ -22,7 +30,7 @@ class MapCanvas extends React.Component {
     this.state = {
       dane: "",
       zoom: "",
-      center: [50.06143, 19.93658],
+      center: [19.93658,50.06143],
     };
   }
   componentDidUpdate(prevProps, prevState) {
@@ -58,6 +66,7 @@ class MapCanvas extends React.Component {
               </LayersControl.BaseLayer>
             </LayersControl>
           </LayerGroup>
+          <SetViewOnClick coords={[this.state.center[1],this.state.center[0]]}/>
         </MapContainer>
       </React.Fragment>
     );
