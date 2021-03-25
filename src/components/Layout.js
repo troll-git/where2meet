@@ -8,7 +8,9 @@ import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import MapCanvas from "./MapCanvas";
 import AddressSearch from "./AddressSearch";
+import TravelTime from "./TravelTime"
 import { useState, useEffect } from "react";
+import { CircleMarker } from "leaflet";
 
 const drawerWidth = 300;
 
@@ -39,9 +41,13 @@ const useStyles = makeStyles((theme) => ({
 export default function Layout() {
   const classes = useStyles();
   const [value, setValue] = useState("");
-  const [start, setStart] = useState([50.06143, 19.93658]);
+  const [Isoline1,setIsoline1]=useState(null)
+  //const [start, setStart] = useState([50.06143, 19.93658]);
   const updateValue = (datafromChild) => {
     setValue(datafromChild);
+  };
+  const updateIsoline1 = (datafromChild) => {
+    setIsoline1(datafromChild);
   };
 
   /*useEffect(() => {
@@ -69,11 +75,12 @@ export default function Layout() {
         <div className={classes.toolbar} />
         <Divider />
         <AddressSearch update={updateValue} />
+        <TravelTime coords={value} update={updateIsoline1}/>
       </Drawer>
       <main className={classes.content}>
         <div className={classes.toolbar} />
 
-        <MapCanvas addr1={value} />
+        <MapCanvas addr1={value} polygon={Isoline1} />
       </main>
     </div>
   );
