@@ -10,7 +10,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import { getIsoline } from "./API";
+import { getIsolineDist } from "./API";
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -19,10 +19,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const TravelTime = (props) => {
+const TravelDistance = (props) => {
   const classes = useStyles();
   const [TravelPolygon, setTravelPolygon] = useState(null);
-  const [time, setTime] = useState(300);
+  const [distance, setDistance] = useState(1);
   const [loading, setLoading] = useState(false);
 
   const setTravelPoly = (data) => {
@@ -40,7 +40,11 @@ const TravelTime = (props) => {
     console.log("getting isoline");
     setLoading(true);
     setTimeout(() => {
-      getIsoline(props.coords.geometry.coordinates, time, setTravelPoly);
+      getIsolineDist(
+        props.coords.geometry.coordinates,
+        distance,
+        setTravelPoly
+      );
       setLoading(false);
     }, 1000);
     console.log(TravelPolygon);
@@ -49,17 +53,14 @@ const TravelTime = (props) => {
   return (
     <React.Fragment>
       <FormControl className={classes.formControl}>
-        <InputLabel id="demo-simple-select-label">Czas podrozy</InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={time}
-          onChange={(e) => setTime(e.target.value)}
-        >
-          {timeList.map((timeItem) => (
-            <MenuItem value={timeItem.valueSec}>{timeItem.timeText}</MenuItem>
-          ))}
-        </Select>
+        <TextField
+          id="standard-helperText"
+          label="Długosc podrozy (km)"
+          defaultValue="1"
+          helperText="Some important text"
+          onChange={(e) => setDistance(e.target.value)}
+        />
+
         <Button variant="contained" color="secondary" onClick={fetchIsoline}>
           LICZ!{" "}
           {loading ? (
@@ -77,22 +78,4 @@ const TravelTime = (props) => {
   );
 };
 
-export default TravelTime;
-
-const timeList = [
-  { timeText: "5 min", valueSec: 300 },
-  { timeText: "5 min", valueSec: 600 },
-  { timeText: "15 min", valueSec: 900 },
-  { timeText: "30 min", valueSec: 1800 },
-  { timeText: "45 min", valueSec: 2700 },
-  { timeText: "1 godzina", valueSec: 3600 },
-  { timeText: "1,5 godziny", valueSec: 5400 },
-  { timeText: "2 godziny", valueSec: 7200 },
-  { timeText: "3 godziny", valueSec: 10800 },
-  { timeText: "4 godziny", valueSec: 14400 },
-  { timeText: "5 godzin", valueSec: 18000 },
-  { timeText: "6 godzin", valueSec: 21600 },
-  { timeText: "7 godzin", valueSec: 25200 },
-  { timeText: "8 godzin", valueSec: 28800 },
-  { timeText: "9 godzin", valueSec: 32400 },
-];
+export default TravelDistance;
