@@ -116,6 +116,7 @@ class MapCanvas extends React.Component {
           center={this.state.center}
           zoom={DEFAULT_VIEWPORT.zoom}
           style={{ height: "100vh" }}
+          placeholder={<p>Mapa srapa</p>}
           //maxZoom={19}
           //animate="true"
           //ref={this.mapRef}
@@ -151,6 +152,17 @@ class MapCanvas extends React.Component {
             bbox={this.state.bbox}
           />
         </MapContainer>
+        <p
+          style={{
+            zIndex: 999,
+            position: "relative",
+            left: "50px",
+            top: "-500px",
+            color: "rebeccapurple",
+          }}
+        >
+          Hello M
+        </p>
       </React.Fragment>
     );
   }

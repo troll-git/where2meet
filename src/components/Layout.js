@@ -12,6 +12,7 @@ import TravelTime from "./TravelTime";
 import TravelDistance from "./TravelDistance";
 import { useState, useEffect } from "react";
 import { CircleMarker } from "leaflet";
+import SwitchRouting from "./SwitchRouting";
 
 const drawerWidth = 300;
 
@@ -80,6 +81,7 @@ export default function Layout() {
         <div className={classes.toolbar} />
         <Divider />
         <AddressSearch update={updateValue} />
+        <SwitchRouting param="travel" />
         <TravelTime coords={value} update={updateIsoline1} />
         <TravelDistance coords={value} update={updateIsolineDist1} />
       </Drawer>
