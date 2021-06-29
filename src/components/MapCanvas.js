@@ -11,6 +11,7 @@ import {
   CircleMarker,
   Popup,
   Polygon,
+  GeoJSON
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import CircularProgress from "@material-ui/core/CircularProgress";
@@ -57,9 +58,12 @@ class MapCanvas extends React.Component {
       dane: "",
       zoom: "",
       center: [19.93658, 50.06143],
+      center2: [19.93658, 50.06143],
       bbox: swapBbox([19.7922355, 49.9676668, 20.2173455, 50.1261338]),
+      bbox2: swapBbox([19.7922355, 49.9676668, 20.2173455, 50.1261338]),
       poly: null,
       poly2: null,
+      intersection:null,
     };
   }
   componentDidUpdate(prevProps, prevState) {
@@ -71,6 +75,15 @@ class MapCanvas extends React.Component {
         this.setState({ bbox: swapBbox(this.props.addr1.bbox) });
 
         console.log(this.state.center);
+      }
+    }
+    if (this.props.addr2) {
+      if (prevState.center2 !== this.props.addr2.geometry.coordinates) {
+        this.setState({ center2: this.props.addr2.geometry.coordinates });
+
+        this.setState({ bbox: swapBbox(this.props.addr2.bbox) });
+
+        console.log(this.state.center2);
       }
     }
     if (this.props.polygon) {
@@ -95,7 +108,20 @@ class MapCanvas extends React.Component {
         this.setState({ bbox: bboxp });
       }
     }
+    if (this.props.intersection) {
+      if (prevState.intersection !== this.props.intersection) {
+        this.setState({ intersection: this.props.intersection });
+        console.log("Intersection")
+        console.log(this.props.intersection);
+        let line = lineString(this.props.intersection);
+        //console.log(line)
+        let bboxp = bbox(line);
+        console.log(bboxp);
+        //this.setState({ bbox: bboxp });
+      }
+    }
   }
+
   /*componentDidUpdate(prevProps, prevState) {
     //console.log(this.props.addr1);
 
@@ -138,6 +164,11 @@ class MapCanvas extends React.Component {
             pathOptions={{ color: "red" }}
             radius={20}
           >
+             <CircleMarker
+            center={[this.state.center2[1], this.state.center2[0]]}
+            pathOptions={{ color: "orange" }}
+            radius={20}
+          ></CircleMarker>
             <Popup>{"pacjent1"}</Popup>
           </CircleMarker>
           {this.state.poly ? <Polygon positions={this.state.poly} /> : null}
@@ -146,6 +177,13 @@ class MapCanvas extends React.Component {
               pathOptions={{ color: "yellow" }}
               positions={this.state.poly2}
             />
+          ) : null}
+           {this.state.intersection ? (
+             <Polygon
+              pathOptions={{ color: "magenta" }}
+              positions={[...this.state.intersection.geometry.coordinates]}
+              />
+            
           ) : null}
           <SetViewOnClick
             center={[this.state.center[1], this.state.center[0]]}

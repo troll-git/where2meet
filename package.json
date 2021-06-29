@@ -11,6 +11,7 @@
     "@testing-library/user-event": "^12.1.10",
     "@turf/bbox": "^6.3.0",
     "@turf/helpers": "^6.3.0",
+    "@turf/intersect": "^6.4.0",
     "leaflet": "^1.7.1",
     "match-sorter": "^6.3.0",
     "react": "^17.0.2",

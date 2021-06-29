@@ -8,8 +8,9 @@ import Grid from "@material-ui/core/Grid";
 const SwitchRouting = (props) => {
   const [iconColor, setIconColor] = useState(false);
   const toggleSwitch=(e)=>{
-    setIconColor(e.target.checked)
-    console.log(e.target.checked)
+    setIconColor(e.target.checked);
+    props.update(e.target.checked);
+    
   }
   if (props.param === "travel") {
     return (
