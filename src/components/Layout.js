@@ -13,6 +13,7 @@ import TravelDistance from "./TravelDistance";
 import { useState, useEffect } from "react";
 import { CircleMarker } from "leaflet";
 import SwitchRouting from "./SwitchRouting";
+import ComputeButton from "./ComputeButton"
 
 const drawerWidth = 300;
 
@@ -44,6 +45,7 @@ export default function Layout() {
   const classes = useStyles();
   const [value, setValue] = useState("");
   const [Isoline1, setIsoline1] = useState(null);
+  const [Isoline2, setIsoline2] = useState(null);
   const [IsolineDist1, setIsolineDist1] = useState(null);
   //const [start, setStart] = useState([50.06143, 19.93658]);
   const updateValue = (datafromChild) => {
@@ -82,7 +84,10 @@ export default function Layout() {
         <Divider />
         <AddressSearch update={updateValue} />
         <SwitchRouting param="travel" />
+        <SwitchRouting param="vehicle" />
         <TravelTime coords={value} update={updateIsoline1} />
+       <ComputeButton/>
+       
         <TravelDistance coords={value} update={updateIsolineDist1} />
       </Drawer>
       <main className={classes.content}>

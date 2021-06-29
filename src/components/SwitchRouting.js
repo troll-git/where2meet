@@ -7,6 +7,10 @@ import Grid from "@material-ui/core/Grid";
 
 const SwitchRouting = (props) => {
   const [iconColor, setIconColor] = useState(false);
+  const toggleSwitch=(e)=>{
+    setIconColor(e.target.checked)
+    console.log(e.target.checked)
+  }
   if (props.param === "travel") {
     return (
       <React.Fragment>
@@ -22,7 +26,7 @@ const SwitchRouting = (props) => {
             <Switch
               color="default"
               inputProps={{ "aria-label": "checkbox with default color" }}
-              onChange={(e) => setIconColor(e.target.checked)}
+              onChange={(e) => toggleSwitch(e)}
             />
           </Grid>
           <Grid item xs={2}>
@@ -38,22 +42,30 @@ const SwitchRouting = (props) => {
   } else if (props.param === "vehicle") {
     return (
       <React.Fragment>
-        <Grid container>
-          <Grid item xs={2}>
-            <DriveEtaRoundedIcon fontSize="large" />
-          </Grid>
-          <Grid item xs={2}>
-            <Switch
-              color="default"
-              inputProps={{ "aria-label": "checkbox with default color" }}
-              onChange={(e) => setIconColor(e.target.checked)}
-            />
-          </Grid>
-          <Grid item xs={2}>
-            <DirectionsBikeRoundedIcon />
-          </Grid>
+      <Grid container>
+        <Grid item xs={2}>
+          {iconColor ? (
+            <DriveEtaRoundedIcon fontSize="large" style={{ color: "gray" }} />
+          ) : (
+            <DriveEtaRoundedIcon fontSize="large" style={{ color: "red" }} />
+          )}
         </Grid>
-      </React.Fragment>
+        <Grid item xs={2}>
+          <Switch
+            color="default"
+            inputProps={{ "aria-label": "checkbox with default color" }}
+            onChange={(e) => toggleSwitch(e)}
+          />
+        </Grid>
+        <Grid item xs={2}>
+          {iconColor ? (
+            < DirectionsBikeRoundedIcon fontSize="large" style={{ color: "red" }} />
+          ) : (
+            < DirectionsBikeRoundedIcon fontSize="large" style={{ color: "gray" }} />
+          )}
+        </Grid>
+      </Grid>
+    </React.Fragment>
     );
   }
 };
