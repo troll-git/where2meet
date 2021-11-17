@@ -55,10 +55,10 @@ const TravelDistance = (props) => {
       <FormControl className={classes.formControl}>
         <TextField
           id="standard-helperText"
-          label="Długosc podrozy (km)"
+          label="Travel length (km)"
           defaultValue="1"
           helperText="Some important text"
-          onChange={(e) => setDistance(e.target.value)}
+          onChange={(e) =>console.log(e.target.value) }//{e.target.value>800?console.log("too much"):console.log("ok")}}//setDistance(e.target.value)}}
         />
 
         <Button variant="contained" color="secondary" onClick={fetchIsoline}>

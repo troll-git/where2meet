@@ -66,11 +66,13 @@ export default function Layout() {
     setIsoline2(datafromChild);
     overlapPolygons(Isoline1,Isoline2)
   };
-
+   
   useEffect(()=>{
     setIntersection(overlapPolygons(Isoline1,Isoline2))
     },[Isoline1,Isoline2])
 
+
+  
   const stringToNumberPolygon=(poly)=>{
     let polyFloat=[]
     for(let i of poly){
@@ -111,8 +113,8 @@ export default function Layout() {
       >
         <div className={classes.toolbar} />
         <Divider />
-        <ParamController name="Marek" updateIsoline={updateIsoline1} updateCoords={updateValue}/>
-        <ParamController name="Maciek" updateIsoline={updateIsoline2} updateCoords={updateValue2}/>
+        <ParamController name="You" updateIsoline={updateIsoline1} updateUpCoords={updateValue}/>
+        <ParamController name="Him/She" updateIsoline={updateIsoline2} updateUpCoords={updateValue2}/>
       </Drawer>
       <main className={classes.content}>
         <div className={classes.toolbar} />

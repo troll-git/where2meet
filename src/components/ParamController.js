@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ParamController = (props) => {
   const classes = useStyles();
-  const [coords, setCoords] = useState("");
+  const [coords, setCoords] = useState([21.634827, 49.561642]);
   const [TravelPolygon, setTravelPolygon] = useState(null);
   const [time, setTime] = useState(300);
   const [distance, setDistance] = useState(1);
@@ -36,16 +36,28 @@ const ParamController = (props) => {
 
   const updateCoords = (datafromChild) => {
     console.log(datafromChild)
-    setCoords(datafromChild);
-    props.updateCoords(datafromChild)
+    setCoords(datafromChild.geometry.coordinates);
+    props.updateUpCoords(datafromChild.geometry.coordinates)
   };
+
   const updateVehicle = (datafromChild) => {
     setVehicle(datafromChild);
   };
   const updateTimeTravel = (datafromChild) => {
     setTimeTravel(datafromChild);
   };
-
+  const handlePosition=(pos)=>{
+    if(coords!==[pos.coords.longitude,pos.coords.latitude]){
+      props.updateUpCoords([pos.coords.longitude,pos.coords.latitude])
+      setCoords([pos.coords.longitude,pos.coords.latitude])
+    }
+    
+    //this.setState({bbox:swapBbox([pos.coords.longitude-0.5,pos.coords.latitude-0.5,pos.coords.longitude+0.5,pos.coords.latitude+0.5])})
+  }
+  useEffect(()=>{
+    navigator.geolocation.getCurrentPosition(handlePosition)
+    console.log(coords)
+  },[])
   const setTravelPoly = (data) => {
     console.log(data);
     let polyg = [];
@@ -62,8 +74,8 @@ const ParamController = (props) => {
     setLoading(true);
     setTimeout(() => {
       !timeTravel?
-      getIsoline(coords.geometry.coordinates, time, setTravelPoly):getIsolineDist(
-        coords.geometry.coordinates,
+      getIsoline(coords, time, setTravelPoly):getIsolineDist(
+        coords,
         distance,
         setTravelPoly
       );
@@ -77,7 +89,7 @@ const ParamController = (props) => {
       <h1>{props.name}</h1>
       <AddressSearch update={updateCoords} />
       <SwitchRouting param="travel" update={updateTimeTravel} />
-      <SwitchRouting param="vehicle" update={updateVehicle} />
+     <SwitchRouting param="vehicle" update={updateVehicle} />
       {!timeTravel?<FormControl className={classes.formControl}>
       
       <InputLabel id="demo-simple-select-label">Czas podrozy</InputLabel>
@@ -98,7 +110,7 @@ const ParamController = (props) => {
           label="Długosc podrozy (km)"
           defaultValue="1"
           //helperText="Some important text"
-          onChange={(e) => setDistance(e.target.value)}
+          onChange={(e) =>e.target.value>=800?e.target.style.color='red':setDistance(e.target.value)}
         />
       </FormControl>}
       
