@@ -35,9 +35,12 @@ const ParamController = (props) => {
 
 
   const updateCoords = (datafromChild) => {
-    console.log(datafromChild)
-    setCoords(datafromChild.geometry.coordinates);
-    props.updateUpCoords(datafromChild.geometry.coordinates)
+    if(datafromChild){
+      console.log(datafromChild)
+      setCoords(datafromChild.geometry.coordinates);
+      props.updateUpCoords(datafromChild.geometry.coordinates)
+    }
+
   };
 
   const updateVehicle = (datafromChild) => {
@@ -47,7 +50,7 @@ const ParamController = (props) => {
     setTimeTravel(datafromChild);
   };
   const handlePosition=(pos)=>{
-    if(coords!==[pos.coords.longitude,pos.coords.latitude]){
+    if(coords!==[pos.coords.longitude,pos.coords.latitude]&&coords){
       props.updateUpCoords([pos.coords.longitude,pos.coords.latitude])
       setCoords([pos.coords.longitude,pos.coords.latitude])
     }

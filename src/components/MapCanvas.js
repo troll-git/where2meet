@@ -43,8 +43,8 @@ var crs84 = new L.Proj.CRS('EPSG:4326','+proj=longlat +ellps=WGS84 +datum=WGS84 
 
 
 const DEFAULT_VIEWPORT = {
-  center: [50.06143, 19.93658],
-  zoom: 13,
+  center: [50.06143,19.93658],
+  zoom: 5,
 };
 
 function swapBbox(bbox) {
@@ -70,8 +70,8 @@ class MapCanvas extends React.Component {
     this.state = {
       dane: "",
       zoom: "",
-      center: [19.93658, 50.06143],
-      center2: [19.93658, 50.06143],
+      center: '',//[19.93658, 50.06143],
+      center2: '',//[19.93658, 50.10143],
       bbox: swapBbox([19.7922355, 49.9676668, 20.2173455, 50.1261338]),
       bbox2: swapBbox([19.7922355, 49.9676668, 20.2173455, 50.1261338]),
       poly: null,
@@ -82,8 +82,8 @@ class MapCanvas extends React.Component {
   handlePosition=(pos)=>{
     console.log([pos.coords.longitude,pos.coords.latitude])
     //this.setState({center:[20.6342105, 49.5616605]})
-    //this.setState({center:[pos.coords.longitude,pos.coords.latitude]})
-    //this.setState({bbox:swapBbox([pos.coords.longitude-0.5,pos.coords.latitude-0.5,pos.coords.longitude+0.5,pos.coords.latitude+0.5])})
+    this.setState({center:[pos.coords.longitude,pos.coords.latitude]})
+    this.setState({bbox:swapBbox([pos.coords.longitude-0.5,pos.coords.latitude-0.5,pos.coords.longitude+0.5,pos.coords.latitude+0.5])})
   }
   
   componentDidMount(){
@@ -92,11 +92,12 @@ class MapCanvas extends React.Component {
     
   }
   componentDidUpdate(prevProps, prevState) {
-    //console.log(this.props.addr1);
+    console.log("dy")
+    console.log(this.props);
     if (this.props.addr1) {
       if (prevState.center !== this.props.addr1) {
         this.setState({ center: this.props.addr1 });
-
+        this.setState({bbox:swapBbox([this.props.addr1[0]-0.01,this.props.addr1[1]-0.01,this.props.addr1[0]+0.01,this.props.addr1[1]+0.01])})
         //this.setState({ bbox: swapBbox(this.props.addr1.bbox) });
 
         console.log(this.state.center);
@@ -105,6 +106,7 @@ class MapCanvas extends React.Component {
     if (this.props.addr2) {
       if (prevState.center2 !== this.props.addr2) {
         this.setState({ center2: this.props.addr2 });
+        this.setState({bbox:swapBbox([this.props.addr2[0]-0.01,this.props.addr2[1]-0.01,this.props.addr2[0]+0.01,this.props.addr2[1]+0.01])})
         //this.setState({ bbox: swapBbox(this.props.addr2.bbox) });
         console.log(this.state.center2);
       }
@@ -152,7 +154,7 @@ class MapCanvas extends React.Component {
       <React.Fragment>
         <MapContainer
           id="map"
-          center={this.state.center}
+          center={DEFAULT_VIEWPORT.center}//{this.state.center}
           zoom={DEFAULT_VIEWPORT.zoom}
           style={{ height: "100vh" }}
           placeholder={<p>Mapa srapa</p>}
@@ -174,18 +176,24 @@ class MapCanvas extends React.Component {
               </LayersControl.BaseLayer>
             </LayersControl>
           </LayerGroup>
-          <CircleMarker
+          {this.state.center?<div><CircleMarker
             center={[this.state.center[1], this.state.center[0]]}
             pathOptions={{ color: "red" }}
             radius={20}
-          >
-             <CircleMarker
+          ></CircleMarker><SetViewOnClick
+          center={[this.state.center[1], this.state.center[0]]}
+          bbox={this.state.bbox}
+        /></div>:<div/>}
+        {this.state.center2?<div><CircleMarker
             center={[this.state.center2[1], this.state.center2[0]]}
             pathOptions={{ color: "orange" }}
             radius={20}
-          ></CircleMarker>
-            <Popup>{"pacjent1"}</Popup>
-          </CircleMarker>
+          ></CircleMarker><SetViewOnClick
+          center={[this.state.center2[1], this.state.center2[0]]}
+          bbox={this.state.bbox}
+        /></div>:<div/>}
+          
+
           {this.state.poly ? <Polygon positions={this.state.poly} /> : null}
           {this.state.poly2 ? (
             <Polygon
@@ -200,10 +208,7 @@ class MapCanvas extends React.Component {
               />
             
           ) : null}
-          <SetViewOnClick
-            center={[this.state.center[1], this.state.center[0]]}
-            bbox={this.state.bbox}
-          />
+         
         </MapContainer>
         <p
           style={{
