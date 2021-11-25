@@ -79,7 +79,7 @@ const TravelTime = (props) => {
 
 export default TravelTime;
 
-const timeList = [
+const timeListPl = [
   { timeText: "5 min", valueSec: 300 },
   { timeText: "5 min", valueSec: 600 },
   { timeText: "15 min", valueSec: 900 },
@@ -95,4 +95,22 @@ const timeList = [
   { timeText: "7 godzin", valueSec: 25200 },
   { timeText: "8 godzin", valueSec: 28800 },
   { timeText: "9 godzin", valueSec: 32400 },
+];
+
+const timeList = [
+  { timeText: "5 min", valueSec: 300 },
+  { timeText: "5 min", valueSec: 600 },
+  { timeText: "15 min", valueSec: 900 },
+  { timeText: "30 min", valueSec: 1800 },
+  { timeText: "45 min", valueSec: 2700 },
+  { timeText: "1 hr", valueSec: 3600 },
+  { timeText: "1,5 hr", valueSec: 5400 },
+  { timeText: "2 hrs", valueSec: 7200 },
+  { timeText: "3 hrs", valueSec: 10800 },
+  { timeText: "4 hrs", valueSec: 14400 },
+  { timeText: "5 hrs", valueSec: 18000 },
+  { timeText: "6 hrs", valueSec: 21600 },
+  { timeText: "7 hrs", valueSec: 25200 },
+  { timeText: "8 hrs", valueSec: 28800 },
+  { timeText: "9 hrs", valueSec: 32400 },
 ];
