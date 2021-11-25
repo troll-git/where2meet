@@ -86,13 +86,13 @@ const ParamController = (props) => {
     }, 1000);
     console.log(TravelPolygon);
   };
-
+//Insert below to activate vehicle switch"SwitchRouting param="vehicle" update={updateVehicle}"
   return (
     <React.Fragment>
       <h1>{props.name}</h1>
       <AddressSearch update={updateCoords} />
       <SwitchRouting param="travel" update={updateTimeTravel} />
-     <SwitchRouting param="vehicle" update={updateVehicle} />
+     
       {!timeTravel?<FormControl className={classes.formControl}>
       
       <InputLabel id="demo-simple-select-label">Travel time</InputLabel>
