@@ -48,7 +48,7 @@ const AddressSearch = (props) => {
       renderInput={(params) => (
         <TextField
           {...params}
-          label="Wybierz miejsce"
+          label="Find place"
           variant="outlined"
           onChange={(e) => setSearchValue(e.target.value)}
           //onChange={(t) => getPlaceCoords(t.target.value, logRes)}

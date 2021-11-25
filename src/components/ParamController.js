@@ -95,7 +95,7 @@ const ParamController = (props) => {
      <SwitchRouting param="vehicle" update={updateVehicle} />
       {!timeTravel?<FormControl className={classes.formControl}>
       
-      <InputLabel id="demo-simple-select-label">Czas podrozy</InputLabel>
+      <InputLabel id="demo-simple-select-label">Travel time</InputLabel>
       <Select
         labelId="demo-simple-select-label"
         id="demo-simple-select"
@@ -119,7 +119,7 @@ const ParamController = (props) => {
       
       
       <Button variant="contained" color="secondary" onClick={fetchIsoline}>
-          LICZ!{" "}
+          GO!{" "}
           {loading ? (
             <CircularProgress
               style={{

@@ -4,7 +4,7 @@ export function getPlaceCoords(stringExpr, processData) {
     q: stringExpr,
     format: "geojson",
     //polygon_geojson: 1,
-    "accept-language": "pl",
+    "accept-language": "en",
   });
 
   //fetch(url);
