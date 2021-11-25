@@ -219,7 +219,7 @@ class MapCanvas extends React.Component {
             color: "rebeccapurple",
           }}
         >
-          For development purposes only
+          
         </p>
       </React.Fragment>
     );
